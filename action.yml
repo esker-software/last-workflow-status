@@ -28,8 +28,6 @@ runs:
             run_id: ${{ github.run_id }}
           })
           let workflow_id = workflow.data.workflow_id
-          console.log("Workflow :")
-          console.log(workflow)
           console.log("Workflow id: " + workflow_id)
 
           // TODO
@@ -38,10 +36,6 @@ runs:
             repo: context.repo.repo,
             workflow_id: workflow_id
           })
-          console.log("Workflow runs :")
-          console.log(workflow_runs)
-          console.log("Our specific workflow :")
-          console.log(workflow_runs.data.workflow_runs[0])
           let last_status = workflow_runs.data.workflow_runs[0].conclusion
           console.log("Last status: " + last_status)
 
