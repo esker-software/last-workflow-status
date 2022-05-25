@@ -42,7 +42,7 @@ runs:
           console.log(workflow_runs)
           console.log("Our specific workflow :")
           console.log(workflow_runs.data.workflow_runs[0])
-          let last_status = workflow_runs.data.workflow_runs[0].data.status
+          let last_status = workflow_runs.data.workflow_runs[0].conclusion
           console.log("Last status: " + last_status)
 
           return last_status
