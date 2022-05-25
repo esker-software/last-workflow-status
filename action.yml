@@ -28,6 +28,7 @@ runs:
             run_id: ${{ github.run_id }}
           })
           let workflow_id = workflow.workflow_id
+          console.log(workflow)
           console.log("Workflow id: " + workflow_id)
 
           // TODO
