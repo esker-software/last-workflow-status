@@ -22,22 +22,28 @@ runs:
         github-token: ${{ inputs.github_token }}
         result-encoding: string
         script: |
-          let workflow = await github.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            run_id: ${{ github.run_id }}
-          })
-          let workflow_id = workflow.data.workflow_id
-          console.log("Workflow id: " + workflow_id)
-
-          // TODO
-          let workflow_runs = await github.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs?status=completed', {
-            owner: context.repo.owner,
-            repo: context.repo.repo,
-            workflow_id: workflow_id
-          })
-          let last_status = workflow_runs.data.workflow_runs[0].conclusion
-          console.log("Last status: " + last_status)
+          try{
+            let workflow = await github.request('GET /repos/{owner}/{repo}/actions/runs/{run_id}', {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              run_id: ${{ github.run_id }}
+            })
+            let workflow_id = workflow.data.workflow_id
+            console.log("Workflow id: " + workflow_id)
+            
+            let workflow_runs = await github.request('GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs?status=completed', {
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              workflow_id: workflow_id
+            })
+            let last_status = workflow_runs.data.workflow_runs[0].conclusion
+            console.log("Last status: " + last_status)
+          }
+          catch (error)
+          {
+            console.error("Erreur lors de la récupération du statut du workflow:", error)
+            return "failure"
+          }
 
           return last_status
 
