@@ -38,12 +38,11 @@ runs:
             })
             let last_status = workflow_runs.data.workflow_runs[0].conclusion
             console.log("Last status: " + last_status)
+            return last_status
           }
           catch (error)
           {
             console.error("Erreur lors de la récupération du statut du workflow:", error)
             return "failure"
           }
-
-          return last_status
 
